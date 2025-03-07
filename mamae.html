@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feliz Dia das Mulheres</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #ffe6f2;
+            color: #ff1493;
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        h1 {
+            margin-top: 50px;
+            font-size: 2.5em;
+            animation: fadeIn 2s ease-in-out;
+            position: relative;
+            z-index: 2;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .heart {
+            color: red;
+            font-size: 2em;
+            animation: heartbeat 1.5s infinite;
+        }
+        @keyframes heartbeat {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.3); }
+        }
+        button {
+            background-color: #ff1493;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            border-radius: 10px;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        button:hover {
+            background-color: #c71585;
+        }
+        p {
+            font-size: 1.2em;
+            margin-top: 20px;
+            position: relative;
+            z-index: 2;
+        }
+        canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<body>
+    <canvas id="heartCanvas"></canvas>
+    <h1>💖 Feliz Dia das Mulheres mãezinha linda e perfeita! 💖</h1>
+    <p>Que seu dia seja maravilhoso mãe, amo muito você em! 🌸</p>
+    <p class="heart">❤️</p>
+    <button onclick="mostrarMensagem()">Clique aqui para uma mensagem especial</button>
+    <p id="mensagem"></p>
+
+    <script>
+        function mostrarMensagem() {
+            document.getElementById('mensagem').innerHTML = "mãe, você é muito especial pra mim, você cuidou de mim como nenhuma outra mãe cuida do seu filho, você me amou e me ama de uma maneira tão especial, eu sei que as vezes eu não sou um filho bom pra você, mas saiba que eu amo tanto você mão, eu amo muito muito mãezinha, não é um presente que vale deinheiro, mas eu fiz de coração pra você mainha!💕";
+        }
+        // Animação de partículas de corações
+        const canvas = document.getElementById('heartCanvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let hearts = [];
+
+        class Heart {
+            constructor(x, y, size, speed) {
+                this.x = x;
+                this.y = y;
+                this.size = size;
+                this.speed = speed;
+                this.opacity = 1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(255, 0, 100, ${this.opacity})`;
+                ctx.font = `${this.size}px Arial`;
+                ctx.fillText('❤️', this.x, this.y);
+            }
+            update() {
+                this.y -= this.speed;
+                this.opacity -= 0.01;
+            }
+        }
+
+        function createHeart() {
+            const x = Math.random() * canvas.width;
+            const y = canvas.height;
+            const size = Math.random() * 30 + 10;
+            const speed = Math.random() * 2 + 1;
+            hearts.push(new Heart(x, y, size, speed));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            hearts.forEach((heart, index) => {
+                heart.update();
+                heart.draw();
+                if (heart.opacity <= 0) hearts.splice(index, 1);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        setInterval(createHeart, 300);
+        animate();
+    </script>
+
+</html>
